@@ -1,0 +1,28 @@
+{
+  "name": "Point",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "unit": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "readings": {
+      "type": "hasMany",
+      "model": "Reading",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
