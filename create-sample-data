@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+# Create a user
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"email": "me@example.com", "username":"me@example.com", "password": "badpass"}' 'http://localhost:3000/api/Users'
+
+# Create a Route to gather everything
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{}' 'http://localhost:3000/api/Routes'
+
+# Add a Site with a single Machine with a single Measurement Point
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Mesa Flats", "description":"Example Panhandle site.", "location": { "lat": 35.1260368, "lng": -102.0157754 } }' 'http://localhost:3000/api/Routes/1/Sites'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Water Well"}' 'http://localhost:3000/api/Sites/1/Machines'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Salinity Probe", "unit": "ppm"}' 'http://localhost:3000/api/Machines/1/Points'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 120, "mark": "2018-05-22T01:50:45.734Z"}' 'http://localhost:3000/api/Points/1/Readings'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 131, "mark": "2018-05-24T02:15:01.613Z"}' 'http://localhost:3000/api/Points/1/Readings'
+
+# Add a Site with two Machines and multiple Points
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Oglala Draw", "description":"Example site with two Machines.", "location": { "lat": 34.5685931, "lng": -101.9881576 } }' 'http://localhost:3000/api/Routes/1/Sites'
+
+# Tar Pit
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Tar Pit"}' 'http://localhost:3000/api/Sites/2/Machines'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Dipstick", "unit": "feet"}' 'http://localhost:3000/api/Machines/2/Points'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 3.5, "mark": "2018-05-23T10:03:45.734Z"}' 'http://localhost:3000/api/Points/2/Readings'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 3.7, "mark": "2018-05-25T03:11:01.613Z"}' 'http://localhost:3000/api/Points/2/Readings'
+
+# Compressor
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Compressor"}' 'http://localhost:3000/api/Sites/2/Machines'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Battery", "unit": "volts"}' 'http://localhost:3000/api/Machines/3/Points'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 22.1, "mark": "2018-05-23T10:03:45.734Z"}' 'http://localhost:3000/api/Points/3/Readings'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 23.05, "mark": "2018-05-25T03:11:01.613Z"}' 'http://localhost:3000/api/Points/3/Readings'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"name": "Pressure", "unit": "psi"}' 'http://localhost:3000/api/Machines/3/Points'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 82, "mark": "2018-05-23T10:03:45.734Z"}' 'http://localhost:3000/api/Points/4/Readings'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"value": 87, "mark": "2018-05-25T03:11:01.613Z"}' 'http://localhost:3000/api/Points/4/Readings'
+
+# fire .mine()
+curl -X GET --header 'Content-Type: application/json' --header 'Accept: application/json' 'http://localhost:3000/api/Routes/mine'
+
+
