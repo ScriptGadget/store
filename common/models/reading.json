@@ -2,6 +2,10 @@
   "name": "Reading",
   "base": "PersistedModel",
   "idInjection": true,
+  "id": {
+    "type": "string",
+    "generated": false,
+    "id": true},
   "options": {
     "validateUpsert": true
   },
