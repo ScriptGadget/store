@@ -1,15 +1,16 @@
 {
   "name": "Reading",
   "base": "PersistedModel",
-  "idInjection": true,
-  "id": {
-    "type": "string",
-    "generated": false,
-    "id": true},
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "id": {
+      "type": "string",
+      "generated": false,
+      "id": true
+    },
     "value": {
       "type": "number",
       "required": true
