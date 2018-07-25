@@ -54,5 +54,9 @@
   "Reading": {
     "dataSource": "db",
     "public": true
+  },
+  "Pumper": {
+    "dataSource": "db",
+    "public": true
   }
 }
