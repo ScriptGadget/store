@@ -1,5 +1,16 @@
 #!/bin/bash
+# This script requires node and curl.
+#
+# To use run the Store with:
+#export store_user='admin' && export store_email='admin@example.com' && export store_password='example' && node .
+#
+# then run this script in another shell with:
+# ./create-sample-data
 
+# login as the test admin
+session_id=$(curl -sX POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"email": "admin@example.com", "username":"admin", "password": "example"}' 'http://localhost:3000/api/Users/login' | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).id")
+
+echo Session ID: $session_id
 
 # Create a Pumper with no route
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "95db9d38-0df8-4b6b-930b-4180e18f538b", "name": "Unassigned Pumper", "email": "nope@example.com", "username":"nope@example.com", "password": "badpass"}' 'http://localhost:3000/api/Pumpers'
@@ -8,7 +19,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "5283d7d9-0d0d-4e10-ba56-28621f4c934c", "name": "Test Pumper", "email": "test@example.com", "username":"test@example.com", "password": "badpass"}' 'http://localhost:3000/api/Pumpers'
 
 # Create a Route to gather everything
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "8c26ea83-c440-42ae-bbcc-acc5b1cd95f1"}' 'http://localhost:3000/api/Routes'
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "8c26ea83-c440-42ae-bbcc-acc5b1cd95f1"}' "http://localhost:3000/api/Pumpers/5283d7d9-0d0d-4e10-ba56-28621f4c934c/routes?access_token=$session_id"
 
 # Add a Site with a single Machine with a single Measurement Point
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "4ff02671-ab30-4e3e-a2cc-da2403d1e3a3", "name": "Mesa Flats", "description":"Example Panhandle site.", "location": { "lat": 35.1260368, "lng": -102.0157754 } }' 'http://localhost:3000/api/Routes/8c26ea83-c440-42ae-bbcc-acc5b1cd95f1/sites'
