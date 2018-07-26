@@ -19,7 +19,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "5283d7d9-0d0d-4e10-ba56-28621f4c934c", "name": "Test Pumper", "email": "test@example.com", "username":"test@example.com", "password": "badpass"}' 'http://localhost:3000/api/Pumpers'
 
 # Create a Route to gather everything
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "8c26ea83-c440-42ae-bbcc-acc5b1cd95f1"}' "http://localhost:3000/api/Pumpers/5283d7d9-0d0d-4e10-ba56-28621f4c934c/routes?access_token=$session_id"
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "8c26ea83-c440-42ae-bbcc-acc5b1cd95f1"}' "http://localhost:3000/api/Pumpers/5283d7d9-0d0d-4e10-ba56-28621f4c934c/route?access_token=$session_id"
 
 # Add a Site with a single Machine with a single Measurement Point
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "4ff02671-ab30-4e3e-a2cc-da2403d1e3a3", "name": "Mesa Flats", "description":"Example Panhandle site.", "location": { "lat": 35.1260368, "lng": -102.0157754 } }' 'http://localhost:3000/api/Routes/8c26ea83-c440-42ae-bbcc-acc5b1cd95f1/sites'
@@ -48,7 +48,12 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "16b673e4-5f30-4f25-823b-858664c09db8", "value": 82, "mark": "2018-05-23T10:03:45.734Z"}' 'http://localhost:3000/api/Points/a5111248-e93a-4141-9bfa-1dca038971d9/readings'
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"id": "5c66b423-6e60-47ad-b6e9-ecdb1661baba", "value": 87, "mark": "2018-05-25T03:11:01.613Z"}' 'http://localhost:3000/api/Points/a5111248-e93a-4141-9bfa-1dca038971d9/readings'
 
-# fire .mine()
-curl -X GET --header 'Content-Type: application/json' --header 'Accept: application/json' 'http://localhost:3000/api/Routes/mine'
+echo "sign in as Test Pumper"
 
+pumper_session_id=$(curl -sX POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"email": "test@example.com", "username":"test@example.com", "password": "badpass"}' 'http://localhost:3000/api/Pumpers/login' | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).id")
 
+echo "pumper_session_id=$pumper_session_id"
+
+echo "testing Route.mine"
+
+curl -X GET --header 'Content-Type: application/json' --header 'Accept: application/json' "http://localhost:3000/api/Routes/mine?access_token=$pumper_session_id"
