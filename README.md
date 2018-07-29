@@ -17,3 +17,20 @@ cd Store
 npm install
 ```
 
+Run store with
+
+```
+export store_user='admin' && export store_email='admin@example.com' && export store_password='example' && node .
+```
+
+In a separate shell, run a script to create test data.
+
+```
+./create-sample-data
+```
+
+Note the Pumper session ID in the output. You will need this to try API calls in the explorer interface.
+
+Visit the explorer interface at http://localhost:3000/explorer/
+
+You can view the API documentation and try live examples.
