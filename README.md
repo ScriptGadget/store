@@ -29,7 +29,7 @@ In a separate shell, run a script to create test data.
 ./create-sample-data
 ```
 
-Note the Pumper session ID in the output. You will need this to try API calls in the explorer interface.
+Note the Technician session ID in the output. You will need this to try API calls in the explorer interface.
 
 Visit the explorer interface at http://localhost:3000/explorer/
 

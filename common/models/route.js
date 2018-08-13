@@ -25,9 +25,9 @@ module.exports = function(Route) {
 
     if (options  && options.accessToken && options.accessToken.userId) {
 
-      // We already have The Pumper's ID
-      // Find the Route. A Pumper can only have one.
-      Route.findOne({where: {pumperId: options.accessToken.userId}}, function(err, route) {
+      // We already have The Technician's ID
+      // Find the Route. A Technician can only have one.
+      Route.findOne({where: {technicianId: options.accessToken.userId}}, function(err, route) {
         if (route && route.id) {
 
           // Get all of this Sites on this Route

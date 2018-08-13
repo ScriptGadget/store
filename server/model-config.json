@@ -55,7 +55,7 @@
     "dataSource": "db",
     "public": true
   },
-  "Pumper": {
+  "Technician": {
     "dataSource": "db",
     "public": true
   }
